@@ -28,7 +28,6 @@ import (
 
 type registerer interface {
 	Register(stage model.Stage, f executor.Factory) error
-	RegisterRollback(kind model.RollbackKind, f executor.Factory) error
 }
 
 type Executor struct {
@@ -186,15 +185,6 @@ func (src *ContextInfo) BuildEnv() (map[string]string, error) {
 	}
 
 	return envs, nil
-}
-
-type RollbackExecutor struct {
-	executor.Input
-}
-
-func (e *RollbackExecutor) Execute(sig executor.StopSignal) model.StageStatus {
-	e.LogPersister.Infof("Unimplement: rollbacking the script run stage")
-	return model.StageStatus_STAGE_FAILURE
 }
 
 // Register registers this executor factory into a given registerer.
