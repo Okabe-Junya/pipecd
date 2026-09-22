@@ -64,6 +64,7 @@ import (
 	"github.com/pipe-cd/pipecd/pkg/app/pipedv1/metadatastore"
 	"github.com/pipe-cd/pipecd/pkg/app/pipedv1/notifier"
 	"github.com/pipe-cd/pipecd/pkg/app/pipedv1/planpreview"
+	"github.com/pipe-cd/pipecd/pkg/app/pipedv1/planpreview/planpreviewmetrics"
 	"github.com/pipe-cd/pipecd/pkg/app/pipedv1/plugin"
 	"github.com/pipe-cd/pipecd/pkg/app/pipedv1/statsreporter"
 	"github.com/pipe-cd/pipecd/pkg/app/pipedv1/trigger"
@@ -947,6 +948,7 @@ func registerMetrics(pipedID, projectID, launcherVersion string) *prometheus.Reg
 	wrapped.Register(collectors.NewProcessCollector(collectors.ProcessCollectorOpts{}))
 
 	controllermetrics.Register(wrapped)
+	planpreviewmetrics.Register(wrapped)
 
 	return r
 }
