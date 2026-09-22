@@ -246,17 +246,6 @@ func (s *store) onDeleteResource(obj *unstructured.Unstructured) {
 	}
 }
 
-func (s *store) getAppManagingNodes(appID string) map[string]node {
-	s.mu.RLock()
-	app, ok := s.apps[appID]
-	s.mu.RUnlock()
-
-	if !ok {
-		return nil
-	}
-	return app.getManagingNodes()
-}
-
 func (s *store) findAppIDByOwners(owners []metav1.OwnerReference) string {
 	for _, ref := range owners {
 		owner, ok := s.resources[string(ref.UID)]
