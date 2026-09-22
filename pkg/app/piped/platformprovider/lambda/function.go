@@ -182,20 +182,6 @@ func parseFunctionManifest(data []byte) (FunctionManifest, error) {
 	return obj, nil
 }
 
-// DecideRevisionName returns revision name to apply.
-func DecideRevisionName(fm FunctionManifest, commit string) (string, error) {
-	tag, err := FindImageTag(fm)
-	if err != nil {
-		return "", err
-	}
-	tag = strings.ReplaceAll(tag, ".", "")
-
-	if len(commit) > 7 {
-		commit = commit[:7]
-	}
-	return fmt.Sprintf("%s-%s-%s", fm.Spec.Name, tag, commit), nil
-}
-
 // FindImageTag parses image tag from given LambdaFunction manifest.
 func FindImageTag(fm FunctionManifest) (string, error) {
 	name, tag := parseContainerImage(fm.Spec.ImageURI)
