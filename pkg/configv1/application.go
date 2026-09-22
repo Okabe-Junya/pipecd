@@ -226,36 +226,6 @@ type SkipOptions struct {
 	Paths                 []string `json:"paths,omitempty"`
 }
 
-// WaitApprovalStageOptions contains all configurable values for a WAIT_APPROVAL stage.
-type WaitApprovalStageOptions struct {
-	// The maximum length of time to wait before giving up.
-	// Defaults to 6h.
-	Timeout        Duration    `json:"timeout" default:"6h"`
-	Approvers      []string    `json:"approvers"`
-	MinApproverNum int         `json:"minApproverNum" default:"1"`
-	SkipOn         SkipOptions `json:"skipOn,omitempty"`
-}
-
-func (w *WaitApprovalStageOptions) Validate() error {
-	if w.MinApproverNum < 1 {
-		return fmt.Errorf("minApproverNum %d should be greater than 0", w.MinApproverNum)
-	}
-	return nil
-}
-
-type CustomSyncOptions struct {
-	Timeout Duration          `json:"timeout" default:"6h"`
-	Envs    map[string]string `json:"envs"`
-	Run     string            `json:"run"`
-}
-
-func (c *CustomSyncOptions) Validate() error {
-	if c.Run == "" {
-		return fmt.Errorf("the CUSTOM_SYNC stage requires run field")
-	}
-	return nil
-}
-
 type SecretEncryption struct {
 	// List of encrypted secrets.
 	EncryptedSecrets map[string]string `json:"encryptedSecrets"`
