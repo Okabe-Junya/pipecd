@@ -155,9 +155,3 @@ func (a *Applier) Delete(ctx context.Context, k ResourceKey) (err error) {
 		k,
 	)
 }
-
-// getNamespaceToRun returns namespace used on kubectl apply/delete commands.
-// Applier.input.Namespace is not used here because it is referenced when the manifest is loaded.
-func (a *Applier) getNamespaceToRun(k ResourceKey) string {
-	return k.namespace
-}
