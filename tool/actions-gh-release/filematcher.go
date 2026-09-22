@@ -33,7 +33,6 @@ import (
 	"os"
 	"path/filepath"
 	"regexp"
-	"slices"
 	"strings"
 	"text/scanner"
 )
@@ -49,13 +48,6 @@ type PatternMatcher struct {
 
 // An Option configures a PatternMatcher.
 type Option func(*PatternMatcher)
-
-// WithRegexpProvider sets a custom regexp provider.
-func WithRegexpProvider(p RegexpProvider) Option {
-	return func(pm *PatternMatcher) {
-		pm.regexpProvider = p
-	}
-}
 
 // NewPatternMatcher creates a new matcher object for specific patterns that can
 // be used later to match against patterns against paths.
@@ -118,10 +110,6 @@ func (pm *PatternMatcher) Matches(file string) bool {
 	return matches(file, pm.patterns)
 }
 
-func (pm *PatternMatcher) MatchesAny(files []string) bool {
-	return slices.ContainsFunc(files, pm.Matches)
-}
-
 func matches(file string, patterns []*Pattern) bool {
 	file = filepath.FromSlash(file)
 	parentPath := filepath.Dir(file)
@@ -142,25 +130,11 @@ func matches(file string, patterns []*Pattern) bool {
 	return false
 }
 
-// Exclusions returns array of negative patterns.
-func (pm *PatternMatcher) Exclusions() []*Pattern {
-	return pm.exclusions
-}
-
-// Patterns returns array of active patterns.
-func (pm *PatternMatcher) Patterns() []*Pattern {
-	return pm.patterns
-}
-
 // Pattern defines a single regexp used to filter file paths.
 type Pattern struct {
 	cleanedPattern string
 	dirs           []string
 	regexp         *regexp.Regexp
-}
-
-func (p *Pattern) String() string {
-	return p.cleanedPattern
 }
 
 func (p *Pattern) regexpString() string {
@@ -233,21 +207,4 @@ func (p *Pattern) regexpString() string {
 	}
 	regStr.WriteString("$")
 	return regStr.String()
-}
-
-// Matches returns true if file matches any of the patterns
-// and isn't excluded by any of the subsequent patterns.
-func Matches(file string, patterns []string, opts ...Option) (bool, error) {
-	pm, err := NewPatternMatcher(patterns, opts...)
-	if err != nil {
-		return false, err
-	}
-	file = filepath.Clean(file)
-
-	if file == "." {
-		// Don't let them exclude everything, kind of silly.
-		return false, nil
-	}
-
-	return pm.Matches(file), nil
 }
