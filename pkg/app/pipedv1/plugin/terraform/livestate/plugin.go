@@ -52,7 +52,7 @@ func (p *Plugin) GetLivestate(ctx context.Context, _ *sdk.ConfigNone, dts []*sdk
 		}, nil
 	}
 
-	cmd, err := provider.NewTerraformCommand(ctx, input.Client, input.Request.DeploymentSource, dt)
+	cmd, err := provider.NewTerraformCommand(ctx, input.Client, input.Request.DeploymentSource, dt, provider.WithoutColor())
 	if err != nil {
 		input.Logger.Error("Failed to initialize Terraform command", zap.Error(err))
 		return nil, err

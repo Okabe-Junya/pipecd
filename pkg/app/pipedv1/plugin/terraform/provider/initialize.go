@@ -26,7 +26,7 @@ import (
 )
 
 // NewTerraformCommand initializes a Terraform command, including `terraform init`.
-func NewTerraformCommand(ctx context.Context, client *sdk.Client, ds sdk.DeploymentSource[config.ApplicationConfigSpec], dt *sdk.DeployTarget[config.DeployTargetConfig]) (*Terraform, error) {
+func NewTerraformCommand(ctx context.Context, client *sdk.Client, ds sdk.DeploymentSource[config.ApplicationConfigSpec], dt *sdk.DeployTarget[config.DeployTargetConfig], opts ...Option) (*Terraform, error) {
 	var (
 		appSpec = ds.ApplicationConfig.Spec
 		flags   = appSpec.CommandFlags
@@ -49,13 +49,19 @@ func NewTerraformCommand(ctx context.Context, client *sdk.Client, ds sdk.Deploym
 		return nil, fmt.Errorf("failed to find terraform (%v)", err)
 	}
 
-	cmd := newTerraform(
-		terraformPath,
-		ds.ApplicationDirectory,
+	baseOpts := make([]Option, 0, 4+len(opts))
+	baseOpts = append(baseOpts,
 		WithVars(mergeVars(dt.Config.Vars, appSpec.Vars)),
 		WithVarFiles(appSpec.VarFiles),
 		WithAdditionalFlags(flags.Shared, flags.Init, flags.Plan, flags.Apply),
 		WithAdditionalEnvs(envs.Shared, envs.Init, envs.Plan, envs.Apply),
+	)
+	baseOpts = append(baseOpts, opts...)
+
+	cmd := newTerraform(
+		terraformPath,
+		ds.ApplicationDirectory,
+		baseOpts...,
 	)
 
 	if err := showUsingVersion(ctx, cmd, infoWriter); err != nil {

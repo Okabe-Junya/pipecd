@@ -40,7 +40,7 @@ func (p *Plugin) GetPlanPreview(ctx context.Context, _ *sdk.ConfigNone, dts []*s
 	}
 	dt := dts[0]
 
-	cmd, err := provider.NewTerraformCommand(ctx, input.Client, input.Request.TargetDeploymentSource, dt)
+	cmd, err := provider.NewTerraformCommand(ctx, input.Client, input.Request.TargetDeploymentSource, dt, provider.WithoutColor())
 	if err != nil {
 		input.Logger.Error("Failed to initialize Terraform command", zap.Error(err))
 		return nil, err
