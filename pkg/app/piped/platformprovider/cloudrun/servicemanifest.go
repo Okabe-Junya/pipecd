@@ -54,15 +54,6 @@ func (m ServiceManifest) UpdateTraffic(revisions []RevisionTraffic) error {
 	return unstructured.SetNestedSlice(m.u.Object, items, "spec", "traffic")
 }
 
-func (m ServiceManifest) UpdateAllTraffic(revision string) error {
-	return m.UpdateTraffic([]RevisionTraffic{
-		{
-			RevisionName: revision,
-			Percent:      100,
-		},
-	})
-}
-
 func (m ServiceManifest) YamlBytes() ([]byte, error) {
 	return yaml.Marshal(m.u)
 }
