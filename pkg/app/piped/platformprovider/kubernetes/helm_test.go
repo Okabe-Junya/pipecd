@@ -22,9 +22,21 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"go.uber.org/zap"
+	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 
 	"github.com/pipe-cd/pipecd/pkg/app/piped/toolregistry"
 )
+
+// GetNestedMap exists only for tests: production code reads nested fields
+// through the differently-named GetNestedStringMap.
+func (m Manifest) GetNestedMap(fields ...string) (map[string]interface{}, error) {
+	sm, _, err := unstructured.NestedMap(m.u.Object, fields...)
+	if err != nil {
+		return nil, err
+	}
+
+	return sm, nil
+}
 
 func TestTemplateLocalChart(t *testing.T) {
 	t.Parallel()
