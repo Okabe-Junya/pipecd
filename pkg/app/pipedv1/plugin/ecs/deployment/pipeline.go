@@ -54,12 +54,8 @@ var allStages = []string{
 }
 
 const (
-	StageECSSyncDescription           = "Sync ECS service with given task definition"
-	StageECSPrimaryRolloutDescription = "Roll out new task set as primary"
-	StageECSCanaryRolloutDescription  = "Roll out new task set as canary"
-	StageECSCanaryCleanDescription    = "Clean up canary task set"
-	StageECSTrafficRoutingDescription = "Route traffic between primary and canary task sets"
-	StageECSRollbackDescription       = "Rollback to previous task set"
+	StageECSSyncDescription     = "Sync ECS service with given task definition"
+	StageECSRollbackDescription = "Rollback to previous task set"
 )
 
 func buildQuickSyncPipeline(autoRollback bool) []sdk.QuickSyncStage {
