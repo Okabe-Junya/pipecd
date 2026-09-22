@@ -32,7 +32,7 @@ area/docs:
           - 'docs/*'
           - 'docs/**/*'
           - 'README.md'
-          - 'CONTRIBUTING.md'
+          - '.github/CONTRIBUTING.md'
           - 'RELEASES.md'
 
 area/examples:

@@ -70,7 +70,7 @@ Participation in PipeCD project is governed by the CNCF [Code of Conduct](CODE_O
 
 ### Contributing
 
-We'd love you to join us! Please see the [Contributing Guide](CONTRIBUTING.md) to get started.
+We'd love you to join us! Please see the [Contributing Guide](.github/CONTRIBUTING.md) to get started.
 
 ---
 

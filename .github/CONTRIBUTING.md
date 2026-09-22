@@ -51,7 +51,7 @@ All pull requests undergo checks by the continuous integration system, GitHub Ac
 
 When you submit a pull request to PipeCD, multiple CI workflows are triggered to validate your changes. These checks help ensure code quality, correctness, and consistency across the project.
 
-To better understand which CI workflows run and what they are responsible for, please refer to the [CI overview documentation](.github/ci.md).
+To better understand which CI workflows run and what they are responsible for, please refer to the [CI overview documentation](./ci.md).
 
 ### Branch Organization
 
@@ -74,7 +74,7 @@ If you are only fixing a bug, you can submit a pull request right away, but we s
 
 If you discover security-related bugs that may compromise the security of current users, please send a direct message to our maintainers on Slack or Twitter instead of opening a public issue.
 
-You can find our DM contacts via [MAINTAINERS.md](./MAINTAINERS.md).
+You can find our DM contacts via [MAINTAINERS.md](../MAINTAINERS.md).
 
 ### Enhancement requests
 
@@ -207,16 +207,16 @@ Note that if it's a new breaking change, make sure to complete the two latter qu
 
 PipeCD consists of several components and docs:
 
-- **cmd/controlplane**: A centralized component that manages deployment data and provides a gRPC API for connecting pipeds, as well as web functionalities such as authentication. [README.md](./cmd/controlplane/README.md)
-- **cmd/piped**: piped is an agent component that runs in your cluster. [README.md](./cmd/piped/README.md)
-- **cmd/pipectl**: The command-line tool for PipeCD. [README.md](./cmd/pipectl/README.md)
-- **cmd/launcher**: The command executor that enables the remote upgrade feature of the piped agent. [README.md](./cmd/launcher/README.md)
-- **web**: The web application provided by the control plane. [README.md](./web/README.md)
-- **docs**: Documentation and references. [README.md](./docs/README.md)
+- **cmd/controlplane**: A centralized component that manages deployment data and provides a gRPC API for connecting pipeds, as well as web functionalities such as authentication. [README.md](../cmd/controlplane/README.md)
+- **cmd/piped**: piped is an agent component that runs in your cluster. [README.md](../cmd/piped/README.md)
+- **cmd/pipectl**: The command-line tool for PipeCD. [README.md](../cmd/pipectl/README.md)
+- **cmd/launcher**: The command executor that enables the remote upgrade feature of the piped agent. [README.md](../cmd/launcher/README.md)
+- **web**: The web application provided by the control plane. [README.md](../web/README.md)
+- **docs**: Documentation and references. [README.md](../docs/README.md)
 
 **You can find detailed development information in the README file of each directory.**
 
-Note: While working with the PipeCD codebase, you may refer to [Makefile](./Makefile) for useful commands.
+Note: While working with the PipeCD codebase, you may refer to [Makefile](../Makefile) for useful commands.
 
 ### Starting a Local Development Environment
 
