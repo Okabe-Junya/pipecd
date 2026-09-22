@@ -19,6 +19,8 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"google.golang.org/api/run/v1"
+	"sigs.k8s.io/yaml"
 )
 
 const revisionManifest = `
@@ -101,4 +103,20 @@ func TestRevisionManifest(t *testing.T) {
 	got, err := rm.RunRevision()
 	require.NoError(t, err)
 	assert.NotEmpty(t, got)
+}
+
+// RunRevision converts the manifest into a *run.Revision. It exists only for
+// tests: production code obtains *run.Revision values from the CloudRun API
+// client, never from a rendered manifest.
+func (r RevisionManifest) RunRevision() (*run.Revision, error) {
+	data, err := r.YamlBytes()
+	if err != nil {
+		return nil, err
+	}
+
+	var rev run.Revision
+	if err := yaml.Unmarshal(data, &rev); err != nil {
+		return nil, err
+	}
+	return &rev, nil
 }
