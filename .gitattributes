@@ -17,3 +17,5 @@ web/public/mockServiceWorker.js linguist-generated=true
 # Lockfiles
 go.sum linguist-generated=true
 yarn.lock linguist-generated=true
+package-lock.json linguist-generated=true
+Chart.lock linguist-generated=true
